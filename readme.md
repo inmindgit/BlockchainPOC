@@ -2,15 +2,15 @@ Dapp Test sobre Smart Contracts en Etherium
 
 - Correr Proyecto
 
-1 - Instalar npm install -g ethereumjs-testrpc
-2 - En consola correr testrpc
-3 - Instalar paquetes de proyecto
+- Instalar npm install -g ethereumjs-testrpc
+- En consola correr testrpc
+- Instalar paquetes de proyecto
     - npm install
-4 - Ejecutar comando de Truffle
+- Ejecutar comando de Truffle
     - truffle compile
     - truffle migrate
-5 - Correr proyecto
+- Correr proyecto
     - npm run start
-6 - Correr test
+- Correr test
     - truffle test
 
