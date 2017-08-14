@@ -1,4 +1,4 @@
-import SimpleStorageContract from '../../../../build/contracts/SimpleStorage.json'
+import ProductStorageContract from '../../../../build/contracts/ProductStorage.json'
 import store from '../../../store'
 import { browserHistory } from 'react-router'
 
@@ -6,14 +6,14 @@ const contract = require('truffle-contract')
 
 
 export const USER_UPDATED = 'ID_UPDATED'
-function idUpdated(id) {
+function updated(data) {
     return {
         type: USER_UPDATED,
-        payload: id.c[0]
+        payload: data
     }
 }
 
-export function testActions(id) {
+export function productActions(data) {
     let web3 = store.getState().web3.web3Instance
 
     // Double-check web3's status.
@@ -21,7 +21,7 @@ export function testActions(id) {
 
         return function(dispatch) {
             // Using truffle-contract we create the authentication object.
-            const simpleStorage = contract(SimpleStorageContract)
+            const simpleStorage = contract(ProductStorageContract)
             simpleStorage.setProvider(web3.currentProvider)
 
             // Declaring this for later so we can chain functions on Authentication.
@@ -37,8 +37,7 @@ export function testActions(id) {
                 simpleStorage.deployed().then(function(instance) {
                     simpleStorageInstance = instance
 
-                    // Attempt to sign up user.
-                    simpleStorageInstance.set(id, {from: coinbase})
+                    simpleStorageInstance.setProduct(data.name, data.price, {from: coinbase})
                         .then(function(result) {
                             console.log("saved")
                             // dispatch(testResult())
@@ -56,7 +55,7 @@ export function testActions(id) {
     }
 }
 
-export function testResult() {
+export function productResult() {
     let web3 = store.getState().web3.web3Instance
 
     // Double-check web3's status.
@@ -64,7 +63,7 @@ export function testResult() {
 
         return function(dispatch) {
             // Using truffle-contract we create the authentication object.
-            const getTest = contract(SimpleStorageContract)
+            const getTest = contract(ProductStorageContract)
             getTest.setProvider(web3.currentProvider)
 
             // Declaring this for later so we can chain functions on Authentication.
@@ -81,12 +80,17 @@ export function testResult() {
                     getTestInstance = instance
 
                     // Attempt to login user.
-                    getTestInstance.get({from: coinbase})
+                    getTestInstance.getProduct(coinbase)
                         .then(function(result) {
-                            console.log(result);
-                            dispatch(idUpdated(result))
+                            //console.log(result);
+
+                            var name = result[0];
+                            var price = result[1].c[0]
+
+                            dispatch(updated({ "name": name, "price": price }))
                         })
                         .catch(function(result) {
+                            console.log(result);
                             console.error('Wallet ' + coinbase + ' does not have an account!')
 
                             return browserHistory.push('/dashboard')

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 import TestForm from './TestForm'
-import { testActions } from './TestFormActions'
+import {testActions, testResult} from './TestFormActions'
 
 const mapStateToProps = (state, ownProps) => {
-    return {}
+    return {
+        id: state.idUser.data
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -12,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
             event.preventDefault();
 
             dispatch(testActions(id))
+        },
+        onChargueForm: () => {
+            dispatch(testResult())
         }
     }
 }

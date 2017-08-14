@@ -2,7 +2,7 @@ const initialState = {
     data: null
 }
 
-const idReducer = (state = initialState, action) => {
+const productReducer = (state = initialState, action) => {
     if (action.type === 'ID_UPDATED')
     {
         return Object.assign({}, state, {
@@ -13,4 +13,4 @@ const idReducer = (state = initialState, action) => {
     return state
 }
 
-export default idReducer
+export default productReducer

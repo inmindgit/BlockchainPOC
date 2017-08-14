@@ -7,6 +7,20 @@ class TestForm extends Component {
         this.state = {
             id: ''
         }
+
+    }
+    componentWillMount() {
+        this.fillInput();
+        // console.log(w);
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps); //you can log data from props here to check
+        this.setState({ id: nextProps.id })
+    }
+
+    fillInput(){
+        this.props.onChargueForm();
     }
 
     onInputChange(event) {
@@ -18,7 +32,7 @@ class TestForm extends Component {
 
         if (this.state.id.length < 1)
         {
-            return alert('Please fill in your name.')
+            return alert('Please fill your ID.')
         }
 
         this.props.onTestFormSubmit(this.state.id)
