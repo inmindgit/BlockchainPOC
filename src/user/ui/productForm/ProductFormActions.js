@@ -39,7 +39,7 @@ export function productActions(data) {
 
                     simpleStorageInstance.setProduct(data.name, data.price, {from: coinbase})
                         .then(function(result) {
-                            console.log("saved")
+                            console.log("saved", result)
                             // dispatch(testResult())
                             return browserHistory.push('/dashboard')
                         })
@@ -82,12 +82,15 @@ export function productResult() {
                     // Attempt to login user.
                     getTestInstance.getProduct(coinbase)
                         .then(function(result) {
-                            //console.log(result);
+                            console.log("get", result);
 
                             var name = result[0];
                             var price = result[1].c[0]
 
-                            dispatch(updated({ "name": name, "price": price }))
+                            dispatch(updated({
+                                "name": name,
+                                "price": price
+                            }))
                         })
                         .catch(function(result) {
                             console.log(result);
